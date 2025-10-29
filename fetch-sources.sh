@@ -1,5 +1,5 @@
 #!/bin/bash
-VERSION=9.0.0-SNAPSHOT
+VERSION=10.0.0-SNAPSHOT
 TARBALL_NAME=org.openjdk.jmc-$VERSION-linux.gtk.x86_64.tar.gz
 URL=https://github.com/adoptium/jmc-build/releases/download/$VERSION/$TARBALL_NAME
 

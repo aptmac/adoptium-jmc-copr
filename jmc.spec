@@ -1,11 +1,11 @@
 # Version
-%global major 9
+%global major 10
 %global minor 0
 %global patchlevel 0
 
 # Revision
 %global revnum 1
-%global revdate 202303191849
+%global revdate 202510121822
 
 # set to 1 for snapshots, 0 for release
 %global usesnapshot 1
@@ -47,7 +47,7 @@ Source3:    jmc.appdata.xml
 BuildRequires:  desktop-file-utils
 BuildRequires:  libappstream-glib
 
-Requires:   java-11-openjdk-devel
+Requires:   java-21-openjdk-devel
 
 %description
 JDK Mission Control is a powerful profiler for HotSpot JVMs and has an
@@ -60,7 +60,7 @@ applications running locally or deployed in production environments.
 %setup -q -n 'JDK Mission Control'
 
 %build
-# Nothing to build, thank you AdoptOpenJDK.
+# Nothing to build, thank you Adoptium.
 
 %install
 
@@ -75,6 +75,11 @@ rm -r %{_builddir}/JDK\ Mission\ Control/p2/
 install -d -m 755 %{buildroot}%{_jmcdir}
 cp -p -r %{_builddir}/JDK\ Mission\ Control/* %{buildroot}%{_jmcdir}/
 cp -p -r %{_builddir}/legal/ %{buildroot}%{_jmcdir}/
+
+# locate and remove all 'libjnidispatch.so' files
+find %{buildroot}%{_jmcdir}/plugins -type f \
+    -path '*com.sun.jna_*/com/sun/jna/*/libjnidispatch.so' \
+    -delete
 
 # move jmc.ini to /etc/jmc.ini
 install -d -m 755 %{buildroot}%{_sysconfdir}
@@ -111,11 +116,14 @@ sed -i "/.SH FILES/a .I %{_sysconfdir}/%{name}.ini" %{buildroot}%{_mandir}/man1/
 %{_metainfodir}/jmc.appdata.xml
 
 %changelog
-* Wed May 17 2023 Alex Macdonald <almacdon@redhat.com> - 9.0.0-1.SNAPSHOT.202303191849
+* Wed Oct 29 2025 aptmac <aptmac@ibm.com> - 10.0.0-1.SNAPSHOT.202510121822
+- Update to snapshot build of 10.0.0
+
+* Wed May 17 2023 aptmac <almacdon@redhat.com> - 9.0.0-1.SNAPSHOT.202303191849
 - Use the appropriate revdate 
 
-* Wed May 17 2023 Alex Macdonald <almacdon@redhat.com> - 9.0.0-1.SNAPSHOT.20211218020
+* Wed May 17 2023 aptmac <almacdon@redhat.com> - 9.0.0-1.SNAPSHOT.20211218020
 - Update to snapshot of 9.0.0
 
-* Wed Jun 16 2021 Alex Macdonald <almacdon@redhat.com> - 8.1.0-1.SNAPSHOT.20210607613
+* Wed Jun 16 2021 aptmac <almacdon@redhat.com> - 8.1.0-1.SNAPSHOT.20210607613
 - Initial copr packaging of AdoptOpenJDK binaries
