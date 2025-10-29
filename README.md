@@ -1,4 +1,7 @@
-# JDK Mission Control copr (9.0.0)
+
+# COPR: JDK Mission Control
+
+### Latest Release: 9.1.1 (July 2025)
 
 ### Motivation
 The purpose of this repo is to provide Fedora users with a method of easily installing and using JDK Mission Control (JMC). The current methodology includes packaging JMC binaries produced by Adoptium, and hosting them on my copr page: https://copr.fedorainfracloud.org/coprs/almac/
@@ -6,6 +9,8 @@ The purpose of this repo is to provide Fedora users with a method of easily inst
 Special thanks to the Adoptium team for providing easy access to builds of JMC. Please find below a list of releases currently supported in copr, and where to find the sources used to package them.
 
 ## Instructions for building in copr
+Check out the branch that you're interested in building: https://github.com/aptmac/adoptium-jmc-copr
+
 1. Use the included script to download the JMC Snapshot builds from Adoptium<br>
   `$ bash fetch-sources.sh`
 
@@ -17,7 +22,7 @@ Special thanks to the Adoptium team for providing easy access to builds of JMC. 
 ## Instructions to use the application
 
 1. Enable the copr repo<br>
-  `$ sudo dnf copr enable almac/jmc9`
+  `$ sudo dnf copr enable almac/jmc`
 
 2. Install JDK Mission Control<br>
   `$ sudo dnf install jmc`

@@ -1,7 +1,7 @@
 # Version
 %global major 9
-%global minor 0
-%global patchlevel 0
+%global minor 1
+%global patchlevel 1
 
 # Revision
 %global revnum 1
@@ -9,7 +9,7 @@
 %global releasestr %{revnum}
 
 %global release_name %{major}.%{minor}.%{patchlevel}
-%global tarball_name org.openjdk.jmc-linux.gtk.x86_64
+%global tarball_name org.openjdk.jmc-%{release_name}-linux.gtk.x86_64
 
 # Install jmc in /usr/lib/jmc (arch-specific and multilib exempt)
 %global _jmcdir %{_prefix}/lib/%{name}
@@ -68,6 +68,11 @@ install -d -m 755 %{buildroot}%{_jmcdir}
 cp -p -r %{_builddir}/JDK\ Mission\ Control/* %{buildroot}%{_jmcdir}/
 cp -p -r %{_builddir}/legal/ %{buildroot}%{_jmcdir}/
 
+# locate and remove all 'libjnidispatch.so' files
+find %{buildroot}%{_jmcdir}/plugins -type f \
+    -path '*com.sun.jna_*/com/sun/jna/*/libjnidispatch.so' \
+    -delete
+
 # move jmc.ini to /etc/jmc.ini
 install -d -m 755 %{buildroot}%{_sysconfdir}
 mv %{buildroot}%{_jmcdir}/%{name}.ini %{buildroot}%{_sysconfdir}/%{name}.ini
@@ -103,5 +108,14 @@ sed -i "/.SH FILES/a .I %{_sysconfdir}/%{name}.ini" %{buildroot}%{_mandir}/man1/
 %{_metainfodir}/jmc.appdata.xml
 
 %changelog
-* Tue Mar 26 2024 almac <almac@redhat.com> - 9.0.0-1
-- Initial package for JMC 9.0.0
+* Wed Oct 29 2025 aptmac <aptmac@ibm.com> - 9.1.1-1
+- Update to version 9.1.1
+
+* Wed May 17 2023 aptmac <almacdon@redhat.com> - 8.3.0-1
+- Update to version 8.3.0-ga
+
+* Tue Nov 09 2021 aptmac <almacdon@redhat.com> - 8.1.0-1
+- Update to version 8.1.0
+
+* Wed Jun 16 2021 aptmac <almacdon@redhat.com> - 8.1.0-1.SNAPSHOT.20210607613
+- Initial copr packaging of AdoptOpenJDK binaries
